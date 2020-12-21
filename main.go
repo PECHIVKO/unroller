@@ -43,11 +43,14 @@ func makeSlice(m, n int) [][]int {
 // createMatrix gets user input, creates Matrix with user values
 func createMatrix() ([][]int, error) {
 	var m, n int
-	var err error
 	fmt.Print("Input dimmentions of [m(rows)][n(columns)]slise:\nm = ")
 	fmt.Scan(&m)
 	fmt.Printf("n = ")
 	fmt.Scan(&n)
+	if m <= 0 || n <= 0 {
+		err := fmt.Errorf("m and n values should be > 0")
+		return nil, err
+	}
 	if m != n {
 		fmt.Println("Is not [n][n]slice but still can be unrolled")
 		// OR
@@ -55,7 +58,7 @@ func createMatrix() ([][]int, error) {
 		// return nil, err
 	}
 	newInput := makeSlice(m, n)
-	fmt.Println("Input every value in slice (You can use any single non-numeric character to separate values):")
+	fmt.Println("Input every value in slice. NOTE! Skiped values will be replased with 0 (You can use any single non-numeric character to separate values):")
 	for i := range newInput {
 		for j := range newInput[i] {
 			fmt.Scan(&newInput[i][j])
@@ -67,7 +70,7 @@ func createMatrix() ([][]int, error) {
 	for _, row := range newInput {
 		fmt.Println(row)
 	}
-	return newInput, err
+	return newInput, nil
 }
 
 func main() {
@@ -75,9 +78,9 @@ func main() {
 	var output []int
 	input, err := createMatrix()
 	if err != nil {
-		fmt.Println("err")
+		fmt.Println(err)
 	} else {
 		_, output = unroll(input, output)
-		fmt.Println("\nUnrollred input:\n", output)
+		fmt.Println("\nUnrollred input:", output)
 	}
 }
