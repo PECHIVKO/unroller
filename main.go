@@ -58,7 +58,7 @@ func createMatrix() ([][]int, error) {
 		// return nil, err
 	}
 	newInput := makeSlice(m, n)
-	fmt.Println("Input every value in slice. NOTE! Skiped values will be replased with 0 (You can use any single non-numeric character to separate values):")
+	fmt.Println("Input every value in slice ordered by rows. NOTE! Skiped values will be replaced with 0 (You can use any single non-numeric symbol to separate values):")
 	for i := range newInput {
 		for j := range newInput[i] {
 			fmt.Scan(&newInput[i][j])
@@ -81,6 +81,6 @@ func main() {
 		fmt.Println(err)
 	} else {
 		_, output = unroll(input, output)
-		fmt.Println("\nUnrollred input:", output)
+		fmt.Println("\nUnrolled input:", output)
 	}
 }
