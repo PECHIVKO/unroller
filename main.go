@@ -2,23 +2,21 @@ package main
 
 import "fmt"
 
-// var input [][]int = [][]int{
-// 	{1, 2, 3},
-// 	{4, 5, 6},
-// 	{7, 8, 9},
-// 	{10, 11, 12},
-// }
-
 func unroll(rolled [][]int, unrolled []int) ([][]int, []int) {
 	if len(rolled) > 0 {
+		// writing rolled[0] to output slice
 		unrolled = append(unrolled, rolled[0]...)
+		// deleting rolled[0] from rolled
 		rolled = rolled[1:]
+		// rotating rolled counterclockwise
 		rolled = rotate(rolled)
+		// recursion
 		rolled, unrolled = unroll(rolled, unrolled)
 	}
 	return rolled, unrolled
 }
 
+//rotate rotates input [][]int slice counterclockwise
 func rotate(unrotated [][]int) [][]int {
 	if len(unrotated) > 0 {
 		rotated := makeSlice(len(unrotated[0]), len(unrotated))
@@ -33,6 +31,7 @@ func rotate(unrotated [][]int) [][]int {
 	return unrotated
 }
 
+// makeSlice creates slice with m*n dimmentions
 func makeSlice(m, n int) [][]int {
 	slice := make([][]int, m)
 	for i := range slice {
@@ -41,14 +40,19 @@ func makeSlice(m, n int) [][]int {
 	return slice
 }
 
-func getInput() [][]int {
+// createMatrix gets user input, creates Matrix with user values
+func createMatrix() ([][]int, error) {
 	var m, n int
-	fmt.Print("Input dimmentions of [m][n]slise:\nm = ")
+	var err error
+	fmt.Print("Input dimmentions of [m(rows)][n(columns)]slise:\nm = ")
 	fmt.Scan(&m)
 	fmt.Printf("n = ")
 	fmt.Scan(&n)
 	if m != n {
 		fmt.Println("Is not [n][n]slice but still can be unrolled")
+		// OR
+		// err = fmt.Errorf("Not square [m][n]slice IS NOT ALLOWED")
+		// return nil, err
 	}
 	newInput := makeSlice(m, n)
 	fmt.Println("Input every value in slice (You can use any single non-numeric character to separate values):")
@@ -63,13 +67,17 @@ func getInput() [][]int {
 	for _, row := range newInput {
 		fmt.Println(row)
 	}
-	return newInput
+	return newInput, err
 }
 
 func main() {
 	var input [][]int
 	var output []int
-	input = getInput()
-	_, output = unroll(input, output)
-	fmt.Println("\nUnrollred input:\n", output)
+	input, err := createMatrix()
+	if err != nil {
+		fmt.Println("err")
+	} else {
+		_, output = unroll(input, output)
+		fmt.Println("\nUnrollred input:\n", output)
+	}
 }
