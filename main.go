@@ -20,7 +20,6 @@ func unroll(rolled [][]int, unrolled []int) ([][]int, []int) {
 func rotate(unrotated [][]int) [][]int {
 	if len(unrotated) > 0 {
 		rotated := makeSlice(len(unrotated[0]), len(unrotated))
-
 		for i := range unrotated {
 			for j := range unrotated[i] {
 				rotated[len(rotated)-1-j][i] = unrotated[i][j]
@@ -62,8 +61,6 @@ func createMatrix() ([][]int, error) {
 	for i := range newInput {
 		for j := range newInput[i] {
 			fmt.Scan(&newInput[i][j])
-			if j < len(newInput[i])-1 {
-			}
 		}
 	}
 	fmt.Println("\nYour input was:")
